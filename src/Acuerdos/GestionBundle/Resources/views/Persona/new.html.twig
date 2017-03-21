@@ -1,0 +1,57 @@
+{% form_theme form 'form/fields.html.twig' %}
+{% extends '::layout-admin.html.twig' %}
+
+{% block content %}
+
+    <h3 class="page-header">Crear persona</h3>
+
+    <div class="row">
+        {{ form_start(form) }}
+
+            <div class="col-md-3">
+                {{ form_row(form.area) }}
+                {{ form_row(form.descripcion) }}
+                {{ form_row(form.email) }}
+                {{ form_row(form.cargo) }}
+            </div>
+            <div class="col-md-3">
+                {{ form_row(form.username) }}
+                <div class="form-group">
+                    {{ form_label(form.password.first) }}
+                    {% if form_errors(form.password.first)!= null %}
+                        <div class="alert alert-danger alert-dismissible alert-cerrar" role="alert" id="form-alert-error" data-dismiss="alert" >
+                            <div style="float: left;"><span class="glyphicon glyphicon-chevron-left"></span></div>
+                            {{ form_errors(form.password.first) }}
+                        </div>
+                    {% else %}
+                        {{ form_errors(form.password.first) }}
+                    {% endif %}
+                    {{ form_label(form.password.first) }}
+                    {{ form_widget(form.password.first) }}
+                </div>
+                {{ form_row(form.password) }}
+                {{ form_row(form.password.second) }}
+            </div>
+            <div class="col-md-1"></div>
+            <div class="col-md-3">
+                {{ form_label(form.isActive) }}
+                <div class="switch">
+                    {{ form_widget(form.isActive) }}
+                    {{ form_label(form.isActive) }}
+                </div>
+                {{ form_errors(form.isActive) }}
+
+                <div class="form-group">
+                    {{ form_label(form.roles) }}
+                    {{ form_widget(form.roles) }}
+                    {{ form_errors(form.roles) }}
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Aceptar</button>
+                    <a class="btn btn-default" href="{{ path('persona') }}">Regresar al listado</a>
+                </div>
+            </div>
+        {{ form_end(form) }}
+    </div>
+
+{% endblock %}

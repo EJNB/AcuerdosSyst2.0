@@ -1,0 +1,72 @@
+{% extends '::layout-admin.html.twig' %}
+
+{% block content %}
+    <h1>Acta No {{ entity.numero }}</h1>
+
+    <table class="table table-condensed table-hover">
+        <tbody>
+            <tr>
+                <th>No</th>
+                <td>{{ entity.numero }}</td>
+            </tr>
+            <tr>
+                <th>Descripcion</th>
+                <td>{{ entity.descripcion }}</td>
+            </tr>
+            <tr>
+                <th>Orden del dia</th>
+                <td>{% for tema in reunion.temas %}
+                        {{ tema.descripcion }}<br>
+                    {% endfor %}
+                </td>
+            </tr>
+            <tr>
+                <th>Participantes</th>
+                <td>
+                </td>
+            </tr>
+            <tr>
+                <th>Ausentes</th>
+                <td>
+                </td>
+            </tr>
+            <tr>
+                <th>Fecha</th>
+                <td>{{ entity.fecha|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Hora Inicio</th>
+                <td>{{ entity.horaInicio |date('H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Hora Fin</th>
+                <td>{{ entity.horaFin |date('H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Acuerdos Tomados</th>
+                <td></td>
+            </tr>
+            <tr>
+                <th>Aprobada</th>
+                <td>{{ entity.aprobada }}</td>
+            </tr>
+            <tr>
+                <th>Revisada</th>
+                <td>{{ entity.revisada }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+
+    <a class="btn btn-default" href="{{ path('acta') }}">Regresar al listado</a>
+    <a class="btn btn-primary" href="{{  path('acta_edit', { 'id': entity.id }) }}">Editar</a>
+    <a class="btn btn-danger link-eliminar"
+       href="javascript:void(0);"
+       data-url="{{ path('acta_delete',{ 'id': entity.id }) }}"
+       data-descripcion="{{ entity.descripcion }}"
+       data-toggle="modal" data-target="#modal-delete"
+    >
+        Eliminar
+    </a>
+    {{ include('AcuerdosGestionBundle:Default:modals.html.twig') }}
+{% endblock %}

@@ -1,0 +1,48 @@
+acuerdos_frontend_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: AcuerdosFrontendBundle:Default:index }
+
+mis_acuerdos:
+    path:     /mis_acuerdos
+    defaults: { _controller: "AcuerdosFrontendBundle:frontend:misAcuerdos" }
+
+mis_actas:
+    path:     /actas
+    defaults: { _controller: "AcuerdosFrontendBundle:frontend:misActas" }
+
+mis_convocatorias:
+    path:     /mis_convocatorias
+    defaults: { _controller: "AcuerdosFrontendBundle:frontend:misConvocatorias" }
+
+new_convocatoria:
+    path:     /new_convocatoria
+    defaults: { _controller: "AcuerdosFrontendBundle:frontend:newConvocatoria" }
+
+convocatoria_create:
+    path:     /create
+    defaults: { _controller: "AcuerdosFrontendBundle:frontend:createConvocatoria" }
+    methods:  POST
+
+mi_convacotoria_edit:
+    path:     /edit_convocatoria/{id}
+    defaults: { _controller: "AcuerdosFrontendBundle:frontend:editConvocatoria" }
+
+convocatoria_update:
+    path:     /edit_convocatoria/{id}
+    defaults: { _controller: "AcuerdosFrontendBundle:frontend:editConvocatoria" }
+
+mi_convacotoria_show:
+    path:     /show_convocatoria/{id}
+    defaults: { _controller: "AcuerdosGestionBundle:Reunion:show" }
+#
+
+#mi_convacotoria_edit:
+#    path:     /edit_convocatoria/{id}
+#    defaults: { _controller: "AcuerdosGestionBundle:Reunion:edit" }
+
+
+#
+
+#convocatoria_create:
+#    path:     /create_convocatoria
+#    defaults: { _controller: "AcuerdosFrontendBundle:frontend:createConvocatoria" }

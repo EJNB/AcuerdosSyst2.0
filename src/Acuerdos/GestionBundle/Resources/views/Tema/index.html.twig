@@ -1,0 +1,65 @@
+{% extends '::layout-admin.html.twig' %}
+
+{% block content %}
+
+    {% include "AcuerdosGestionBundle:Default:flash-message.html.twig" %}
+
+    <h2 class="page-header">Temas</h2>
+
+    <div class="count pull-left">
+        Total de registros : <span class="badge">{{ pagination.getTotalItemCount }}</span>
+    </div>
+
+    <table class="table table-striped table-hover table-condensed">
+        <thead>
+        <tr>
+            <th>No</th>
+            <th>{{ knp_pagination_sortable(pagination, 'Tema', 't.tema') }}</th>
+            <th>{{ knp_pagination_sortable(pagination, 'Clasificacion', 't.clasificacion') }}</th>
+            <th>{{ knp_pagination_sortable(pagination, 'Descripcion', 't.descripcion') }}</th>
+            <th>Convocatoria</th>
+            <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for entity in pagination %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ entity.tema }}</td>
+                <td>{{ entity.clasificacion }}</td>
+                <td>{{ entity.descripcion }}</td>
+                {#<td>#}
+                {#{% for responsable in entity.personas %}#}
+                {#{{ responsable }}<br>#}
+                {#{% endfor %}#}
+                {#</td>#}
+                <td>{{ entity.reunion }}</td>
+                <td>
+                    <a href="{{ path('tema_edit', { 'id': entity.id }) }}"><span class="glyphicon glyphicon-pencil"></span>Editar</a>
+                    <a class="link-eliminar" href="javascript:void(0);"
+                       data-url = "{{ path('tema_delete', { 'id': entity.id }) }}"
+                       data-descripcion="{{ entity.descripcion }}"
+                       data-toggle="modal" data-target="#modal-delete">
+                        <span class="glyphicon glyphicon-trash"></span>Eliminar
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        <tfoot>
+        <tr>
+            <td colspan="3">
+                {{ include('AcuerdosGestionBundle:Default:paginator.html.twig') }}
+            </td>
+        </tr>
+        </tfoot>
+    </table>
+
+    <div class="list-actions">
+        {% include "AcuerdosGestionBundle:Default:link-add.html.twig" with { url:'tema_new' } %}
+    </div>
+
+
+    {{ include('AcuerdosGestionBundle:Default:modals.html.twig') }}
+{% endblock %}
+

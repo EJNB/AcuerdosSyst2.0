@@ -1,0 +1,16 @@
+{% extends '::layout-admin.html.twig' %}
+
+{% block content %}
+    {% include "AcuerdosGestionBundle:Default:flash-message.html.twig" %}
+
+    <h2 class="page-header">Acuerdos</h2>
+
+    {{ include('AcuerdosGestionBundle:Acuerdo:table-index.html.twig', {'pagination' : pagination }) }}
+
+    <div class="list-actions">
+        {% include "AcuerdosGestionBundle:Default:link-add.html.twig" with { url:'acuerdo_new' } %}
+    </div>
+
+    {{ include('AcuerdosGestionBundle:Default:modals.html.twig') }}
+
+{% endblock %}

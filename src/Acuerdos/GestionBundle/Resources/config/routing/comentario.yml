@@ -1,0 +1,11 @@
+comentario_new:
+    path : /new
+    defaults : { _controller : "AcuerdosGestionBundle:Comentario:newAjaxComment"}
+
+comentario_edit:
+    path : /edit
+    defaults : { _controller : "AcuerdosGestionBundle:Comentario:editComentario"}
+
+comentario_delete:
+    path : /delete
+    defaults : { _controller : "AcuerdosGestionBundle:Comentario:deleteComentario"}

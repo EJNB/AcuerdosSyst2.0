@@ -1,0 +1,62 @@
+<div class="count pull-left" style="display: block;">
+    Total de registros : <span class="badge">{{ pagination.getTotalItemCount }}</span>
+</div>
+<br>
+<table class="table table-hover table-condensed">
+    <thead>
+    <tr>
+        <th style="width: 5%;">No</th>
+        <th style="width: 20%;">{{ knp_pagination_sortable(pagination, 'Nombre y apellidos', 'p.descripcion') }}</th>
+        <th style="width: 7%;">{{ knp_pagination_sortable(pagination, 'Usuario', 'p.username') }}</th>
+        <th style="width: 20%;">{{ knp_pagination_sortable(pagination, 'Cargo', 'p.cargo') }}</th>
+        <th style="width: 20%;">{{ knp_pagination_sortable(pagination, 'Email', 'p.email') }}</th>
+        <th style="width: 15%">Departamento</th>
+        <th style="width: 25%">Acciones</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for entity in pagination %}
+        <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ entity.descripcion }}</td>
+            <td>{{ entity.username }}</td>
+            {#<td>{{ entity.apellidos }}</td>#}
+            <td>{{ entity.cargo }}</td>
+            <td>{{ entity.email }}</td>
+            <td>{{ entity.area }}</td>
+            <td>
+                {#<a href="&#123;&#35;{{ path('persona_edit', { 'id': entity.id }) }}&#35;&#125;"><span class="glyphicon glyphicon-eye-open"></span></a>#}
+                <a href="javascript:void(0);"
+                   url_change_password="{{ path('change_password', { 'id': entity.id }) }}"
+                   descripcion = "{{ entity.descripcion }}"
+                   class="link-tooltip link-change-password"
+                   data-placement="top"
+                   title="Cambiar contraseña"
+                   data-toggle="modal"
+                   data-target="#change_password"
+                >
+                    <span class="glyphicon glyphicon-edit"></span>
+                </a>
+                <a href="{{ path('persona_edit', { 'id': entity.id }) }}" class="link-tooltip" data-placement="top" title="Editar">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                </a>
+                <a class="link-eliminar link-tooltip"
+                   href="javascript:void(0);"
+                   data-placement="top" title="Eliminar"
+                   data-url = "{{ path('persona_delete', { 'id': entity.id }) }}"
+                   data-descripcion="{{ entity.cargo }}"
+                   data-toggle="modal" data-target="#modal-delete">
+                    <span class="glyphicon glyphicon-trash"></span>
+                </a>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+    <tfoot>
+    <tr>
+        <td colspan="3">
+            {{ include('AcuerdosGestionBundle:Default:paginator.html.twig') }}
+        </td>
+    </tr>
+    </tfoot>
+</table>

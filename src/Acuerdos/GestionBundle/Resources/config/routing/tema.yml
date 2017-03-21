@@ -1,0 +1,37 @@
+tema:
+    path:     /
+    defaults: { _controller: "AcuerdosGestionBundle:Tema:index" }
+
+tema_show:
+    path:     /{id}/show
+    defaults: { _controller: "AcuerdosGestionBundle:Tema:show" }
+
+tema_new:
+    path:     /new
+    defaults: { _controller: "AcuerdosGestionBundle:Tema:new" }
+
+tema_create:
+    path:     /create
+    defaults: { _controller: "AcuerdosGestionBundle:Tema:create" }
+    methods:  POST
+
+tema_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "AcuerdosGestionBundle:Tema:edit" }
+
+tema_update:
+    path:     /{id}/update
+    defaults: { _controller: "AcuerdosGestionBundle:Tema:update" }
+    methods:  [POST, PUT]
+
+tema_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "AcuerdosGestionBundle:Tema:delete" }
+
+tema_delete_ajax:
+    path:     /delete
+    defaults: { _controller: "AcuerdosGestionBundle:Tema:delete" }
+
+add_temas:
+    path:     /addTema
+    defaults: { _controller: "AcuerdosGestionBundle:Tema:addTema" }

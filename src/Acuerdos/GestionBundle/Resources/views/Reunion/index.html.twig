@@ -1,0 +1,80 @@
+{% extends '::layout-admin.html.twig' %}
+
+{% block content %}
+    {% include "AcuerdosGestionBundle:Default:flash-message.html.twig" %}
+    {% if app.request.uri==url('mis_convocatorias') %}
+        <h2 class="page-header">Mis Convocatorias</h2>
+    {% else %}
+        <h2 class="page-header">Convocatorias</h2>
+    {% endif %}
+
+
+    {{ include('AcuerdosGestionBundle:Default:register-count.html.twig') }}
+    <table class="table table-striped table-hover table-condensed">
+        <thead>
+        <tr>
+            <th style="width: 10%">{{ knp_pagination_sortable(pagination, 'IdReunion', 'r.idReunion') }}</th>
+            {#<th>Descripcion</th>#}
+            <th>{{ knp_pagination_sortable(pagination, 'Fecha de Creación', 'r.fechaCreacion') }}</th>
+            <th>{{ knp_pagination_sortable(pagination, 'Fecha de Realización', 'r.fechaRealizacion') }}</th>
+            <th>{{ knp_pagination_sortable(pagination, 'Lugar', 'r.lugar') }}</th>
+            {#<th>{{ knp_pagination_sortable(pagination, 'Nivel', 'r.nivel') }}</th>#}
+            <th>{{ knp_pagination_sortable(pagination, 'Tipo', 'r.tipo') }}</th>
+            <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for entity in pagination %}
+            <tr>
+                <td>{{ entity.idReunion }}</td><!--en este columna se mostraran los ids de las reunii=ones q no es nas q el prefijo de la procedencia + el id de la reunio-->
+                {#<td>{{ entity.procedencia.descripcion }}</td>#}
+                <td>{% if entity.fechaCreacion %}{{ entity.fechaCreacion|date('d-m-Y h:i') }}{% endif %}</td>
+                <td>{% if entity.fechaRealizacion %}{{ entity.fechaRealizacion|date('d-m-Y h:i') }}{% endif %}</td>
+                <td>{{ entity.lugar }}</td>
+                {#<td>{{ entity.nivel }}</td>#}
+                <td>{% if entity.tipo == 1 %}{{ 'Ordinaria' }} {% else %} {{ 'Extraordinaria' }}{% endif %}</td>
+                {#<td>{{ entity.prefijo }}</td>#}
+                <td>
+                    <a {% if app.request.uri==url('mis_convocatorias') %}
+                            href="{{ path('mi_convacotoria_show', { 'id': entity.id }) }}"
+                        {% else %}
+                            href="{{ path('reunion_show', { 'id': entity.id }) }}"
+                        {% endif %}
+                            class="link-tooltip" data-placement="top" title="Ver">
+                            <span class="glyphicon glyphicon-eye-open"></span>
+                    </a>
+                    <a {% if app.request.uri==url('mis_convocatorias') %}
+                            href="{{ path('mi_convacotoria_edit', { 'id': entity.id }) }}"
+                        {% else %}
+                            href="{{ path('reunion_edit', { 'id': entity.id }) }}"
+                        {% endif %}
+                         class="link-tooltip" data-placement="top" title="Editar">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                    </a>
+                    <a class="link-tooltip link-eliminar" href="javascript:void(0);"
+                       data-placement="top"
+                       title="Eliminar"
+                       data-url = "{{ path('reunion_delete', { 'id': entity.id }) }}"
+                       data-descripcion="{{ entity.procedencia }}"
+                       data-toggle="modal" data-target="#modal-delete"
+                    >
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="3">
+                    {{ include('AcuerdosGestionBundle:Default:paginator.html.twig') }}
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+    <div class="list-actions">
+        {% include "AcuerdosGestionBundle:Default:link-add.html.twig" with { url: app.request.uri==url('reunion') ?'reunion_new':'new_convocatoria' } %}
+    </div>
+
+    {{ include('AcuerdosGestionBundle:Default:modals.html.twig') }}
+{% endblock %}

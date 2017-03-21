@@ -1,0 +1,125 @@
+<html>
+    <head>
+        <style type="text/css">
+            .table{
+                margin-top: 20px;
+                margin-bottom: 20px;
+                max-width: 100%;
+                width: 100%;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            {#darle el formato q lleva el acta pero en html#}
+            {#logo de la melia + ACTA NO n NOMBRE DE LA REUNION #}
+            <div class="acta-encabezado">
+                <div class="header-logo">ESTE ES EL PRIMER DIV PARA EL LOGO{#<h1>MELIA</h1><h3>HABANA</h3><h4>CUBA</h4>#}</div><!--Este div contendra el logo de melia-->
+                <div class="encabezado">
+                    {#JJJJJJJJ#}
+                    <div class="header-first">ESTE ES EL SEGUNDO DIV PARA EL ENCABEZADO{#<h2>{{ acta.descripcion }}</h2>#}</div><!--Este es el encabezado del acta-->
+                    <div class="header-second">ESTE ES EL 3RE DIV{#HOTEL MELIA HABANA</div><div class="paginado">#}</div>
+                </div>
+            </div>
+
+            <h3 style="display: inline">Fecha:</h3>{{ acta.fecha | date }}<br>{#fecha de acta#}
+            <h3 style="display: inline">Hora de inicio:</h3>{{ acta.horaInicio | date('H:i')}}<br>{#hora de inicio#}
+            <h3 style="display: inline">Hora de terminacion:</h3>{{ acta.horaFin | date('H:i')}}<br>{#Hora de terminacion#}
+            <h3 style="display: inline">Total de miembros:</h3>{{ entities | length }}<br>{#total de miembros#}
+            <h3 style="display: inline">Por ciento de asistencia:</h3><br>
+
+            {#Cantidad Presentes#} {#presentes cantidad#} {#Posibles asistir#}{#Cantidad de ausentes#}
+            {#porciento de asistencia#}
+
+            {#lista de presentes#}
+            <h3>Presentes</h3>
+            <table class="table table-bordered table-condensed">
+                <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Nombre y appellidos</th>
+                    <th>Cargo</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for entity in entities if (entity.asistencia==0 and entity.tipo=='Participante') %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ entity.idPersona.descripcion }}</td>
+                        <td>{{ entity.idPersona.cargo }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            {#lista de invitados #}
+            <h3>Invitados</h3>
+            <ol>
+                {% for entity in entities if entity.tipo=='Invitado' %}
+                    <li><p>{{ entity.idPersona.descripcion }} - {{ entity.idPersona.cargo }}</p></li>
+                {% endfor %}
+            </ol>
+
+            {#lista de los ausentes#}
+            <h3>Ausentes</h3>
+            <table class="table table-bordered table-condensed">
+                <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Nombre y appellidos</th>
+                    <th>Cargo</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for entity in entities if (entity.asistencia==1 and entity.tipo=='Participante') %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ entity.idPersona.descripcion }}</td>
+                        <td>{{ entity.idPersona.cargo }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+            {#orden del dia con los responsables#}
+            <h3>Orden del dia</h3>
+            <ol>
+                {% for tema in temas %}
+                    {#{% for tema in entity.idReunion.temas %}#}
+                    <li>
+                        <p>
+                            {{ tema.descripcion }}.
+                            {% for responsable in tema.personas %}
+                                <br>{{ loop.index }}. {{ responsable.descripcion }}
+                            {% endfor %}
+                        </p>
+                    </li>
+                    {#{% endfor %}#}
+                {% endfor %}
+            </ol>
+
+            {#desarrollo de la reunion #}
+            <h3>Desarrollo de la reunion</h3>
+            {% for tema in temas %}
+                {{ loop.index }}
+                {% for comentario in tema.comentarios %}{#imprimir los comentarios por temas con la persona q lo emitio#}
+                    {{ comentario }}                    {#tabien debo mostrar los acuerdos tomados por temas#}
+                {% endfor %}
+            {% endfor %}
+            {#punto no1:#} {#nombre del tema #}
+            {#todos los comentarios acerca de ese tema y los acuerdos tomados en ese tema#}
+            {#punto no2:#} {#nombre del tema #}
+
+
+            {#aprobada#}
+            {#nombre de la persona +el cargo#}
+
+            {#revisada #}
+            {#nombre de la persona +el cargo#}
+        </div>
+    </body>
+</html>
+{#{% extends '::layout-admin.html.twig' %}#}
+
+{#{% block content %}#}
+
+{#{% endblock %}#}

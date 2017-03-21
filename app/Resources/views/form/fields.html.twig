@@ -1,0 +1,17 @@
+{% block form_row %}
+    {% spaceless %}
+        <div class="form-group">
+            {{ form_label(form) }}
+            {% if form_errors(form)!= null %}
+                <div class="alert alert-danger alert-dismissible alert-cerrar" role="alert" id="form-alert-error" data-dismiss="alert" >
+                    <div style="float: left;"><span class="glyphicon glyphicon-chevron-left"></span></div>
+                    {{ form_errors(form) }}
+                </div>
+            {% else %}
+                {{ form_errors(form) }}
+            {% endif %}
+            {#{{ form_errors(form) }}#}
+            {{ form_widget(form) }}
+        </div>
+    {% endspaceless %}
+{% endblock form_row %}

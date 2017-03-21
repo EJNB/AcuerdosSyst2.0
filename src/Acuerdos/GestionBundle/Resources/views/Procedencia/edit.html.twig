@@ -1,0 +1,17 @@
+{% extends '::layout-admin.html.twig' %}
+
+{% block content %}
+
+    <h3 class="page-header">Editar procedencia: {{ entity.procedencia }}</h3>
+
+    <div class="col-md-3">
+        {{ form_start(edit_form) }}
+        {{ form_widget(edit_form) }}
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Aceptar</button>
+            <a class="btn btn-default" href="{{ path('procedencia') }}">Regresar al listado</a>
+        </div>
+        {{ form_end(edit_form) }}
+    </div>
+
+{% endblock %}

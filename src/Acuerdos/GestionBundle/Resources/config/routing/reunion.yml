@@ -1,0 +1,30 @@
+reunion:
+    path:     /
+    defaults: { _controller: "AcuerdosGestionBundle:Reunion:index" }
+
+reunion_show:
+    path:     /{id}/show
+    defaults: { _controller: "AcuerdosGestionBundle:Reunion:show" }
+
+reunion_new:
+    path:     /new
+    defaults: { _controller: "AcuerdosGestionBundle:Reunion:new" }
+
+reunion_create:
+    path:     /create
+    defaults: { _controller: "AcuerdosGestionBundle:Reunion:create" }
+    methods:  POST
+
+reunion_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "AcuerdosGestionBundle:Reunion:edit" }
+
+reunion_update:
+    path:     /{id}/update
+    defaults: { _controller: "AcuerdosGestionBundle:Reunion:update" }
+    methods:  [POST, PUT]
+
+reunion_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "AcuerdosGestionBundle:Reunion:delete" }
+#    methods:  [POST, DELETE]

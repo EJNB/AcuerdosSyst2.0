@@ -1,0 +1,11 @@
+<select
+    name="select-temas-asignados[]"
+    id="select-temas-asignados"
+    size="10" multiple
+    class="form-control"
+    required="required"
+>
+    {% for tema in temas %}
+        <option value="{{ tema.id }}">{{ tema.descripcion }}</option>
+    {% endfor %}
+</select>

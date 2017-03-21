@@ -1,0 +1,64 @@
+{% form_theme edit_form 'form/fields.html.twig' %}
+{% extends '::layout-admin.html.twig' %}
+
+{% block content %}
+    {% set select='selected' %}
+    <div class="container">
+        <h1 class="page-header">Editar acuerdo {{ entity.idAcuerdo }}</h1>
+
+        {{ form_start(edit_form) }}
+        <div class="row  container-fluid">
+            <div class="col-md-4">
+
+                {# Reunion #}<!--Estos seran dos select q dependeran el uno del otro una vez q seleccione la reunion
+                se enviara por ajax y el otro select se poblara con los temas q posee dicha reunion seleccionada-->
+                {# Tema#}
+                {{ form_row(edit_form.reunion) }}
+                <div class="form-group">
+                    <div class="list-temas">
+                        {{ include('AcuerdosGestionBundle:Acuerdo:temas.html.twig') }}
+                    </div>
+                </div>
+
+                {{ form_row(edit_form.descripcion) }}
+
+                <div class="pull-left">
+                    <button type="submit" class="btn btn-primary">Editar</button>
+                    <a href="{{ path('acuerdo') }}" class="btn btn-default">Regresar al listado</a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                {{ form_row(edit_form.estado) }}
+                {{ form_row(edit_form.fechaCumplimientoIndicada) }}
+                {#Responsables#}
+                <div class="form-group">
+                    <label>Responsabes</label>
+                    <select class="form-control selectpicker"
+                            name="select-responsab-disponibles[]"
+                            id="select-part-responsables"
+                            data-size="8"
+                            multiple data-actions-box="true"
+                            data-live-search="true"
+                            title="Seleccione los responsables"
+                    >
+                        {% for area in areas %}
+                            <optgroup label="{{ area.area }}">
+                                {% for persona in area.personas %}
+                                    <option
+                                            value="{{ persona.id }}"
+                                            {% for responsable in entity.personas %}
+                                                {% if persona.id == responsable.id %}
+                                                    {{ select }}
+                                                {% endif %}
+                                            {% endfor %}
+                                    >{{ persona.descripcion }}</option>
+                                {% endfor %}
+                            </optgroup>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+        {{ form_end(edit_form) }}
+    </div>
+{% endblock %}

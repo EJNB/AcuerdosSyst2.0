@@ -1,0 +1,53 @@
+acta:
+    path:     /
+    defaults: { _controller: "AcuerdosGestionBundle:Acta:index" }
+
+acta_show:
+    path:     /{id}/show
+    defaults: { _controller: "AcuerdosGestionBundle:Acta:show" }
+
+acta_new:
+    path:     /new
+    defaults: { _controller: "AcuerdosGestionBundle:Acta:new" }
+
+acta_create:
+    path:     /create
+    defaults: { _controller: "AcuerdosGestionBundle:Acta:create" }
+    methods:  POST
+
+acta_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "AcuerdosGestionBundle:Acta:edit" }
+
+acta_update:
+    path:     /{id}/update
+    defaults: { _controller: "AcuerdosGestionBundle:Acta:update" }
+    methods:  [POST, PUT]
+
+acta_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "AcuerdosGestionBundle:Acta:delete" }
+#    methods:  [POST, DELETE]
+
+#esta ruta se encargara de mostrar todo el formulario una vez q seleccionamos la reunion
+select_reunion:
+    path:     /new/{reunion_id}
+    defaults: { _controller: "AcuerdosGestionBundle:Acta:actanew" }
+
+#toma de acuerdo en las actas
+acta_acuerdo_create:
+    path:     /createAcuerdo
+    defaults: { _controller: "AcuerdosGestionBundle:Acta:createAcuerdo" }
+#    methods:  POST
+
+#encargada de eejecutar el metodo para intrducir las personas ausentes
+acta_update_asistencia:
+    path:     /update_asistant
+    defaults: { _controller: "AcuerdosGestionBundle:Acta:updateAsinstant" }
+
+acta_print_pdf:
+    path:     /{id}/pdf
+    defaults: { _controller: "AcuerdosGestionBundle:Acta:printpdf" }
+
+
+

@@ -1,0 +1,65 @@
+# To get started with security, check out the documentation:
+# http://symfony.com/doc/current/book/security.html
+security:
+
+    # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
+    providers:
+        our_db_provider:
+            entity:
+                class: AcuerdosGestionBundle:Persona
+                property: username
+                # if you're using multiple entity managers
+                # manager_name: customer
+        in_memory:
+            memory:
+                users:
+                    ryan:
+                        password: ryanpass
+                        roles: 'ROLE_USER'
+                    admin:
+                        password: kitten
+                        roles: 'ROLE_ADMIN'
+    encoders:
+        Acuerdos\GestionBundle\Entity\Persona:
+            algorithm: bcrypt
+            cost: 12
+#        Symfony\Component\Security\Core\User\User: plaintext
+
+    firewalls:
+        default:
+            anonymous: ~
+            http_basic: ~
+            form_login:
+                login_path: login
+                check_path: login_check
+                default_target_path: mis_acuerdos
+
+            logout:
+                path: /logout
+                target: login
+        # disables authentication for assets and the profiler, adapt it according to your needs
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        main:
+            anonymous: ~
+            # activate different ways to authenticate
+
+            # http_basic: ~
+            # http://symfony.com/doc/current/book/security.html#a-configuring-how-your-users-will-authenticate
+
+            # form_login: ~
+            # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
+
+    access_control:
+        # require ROLE_ADMIN for /admin*
+        - { path: ^/Seguridad, roles: ROLE_ADMIN }
+#        - { path: ^/Gestion/tema, roles: [ROLE_ADMIN,ROLE_EDITOR,] }
+#        - { path: ^/Gestion/persona/add/persona, roles: [ROLE_ADMIN,ROLE_EDITOR] }
+        - { path: ^/Gestion/*, roles: [ROLE_ADMIN,ROLE_EDITOR] }
+#        - { path: ^/Gestion/procedencia, roles: [ROLE_ADMIN,ROLE_EDITOR] }
+#        - { path: ^/Gestion/acuerdo, roles: [ROLE_ADMIN,ROLE_EDITOR] }
+#        - { path: ^/Gestion/temas, roles: [ROLE_ADMIN,ROLE_EDITOR] }
+#        - { path: ^/Gestion/area, roles: [ROLE_ADMIN,ROLE_EDITOR] }
+#        - { path: ^/Gestion/acta, roles: [ROLE_ADMIN,ROLE_EDITOR] }

@@ -1,0 +1,5 @@
+<select name="select-temas-disponibles[]" id="select-temas-disponibles" size="10" class="form-control">
+    {% for tema in temas %}
+        <option value="{{ tema.id }}">{{ tema.descripcion }}</option>
+    {% endfor %}
+</select>

@@ -1,0 +1,10 @@
+<select id="select_sustitutos"
+        class="form-control selectpicker"
+        data-live-search="true"
+        data-size="6"
+        title="Seleccione la persona">
+    {#<option selected="selected" value="">Seleccione la persona</option>#}
+    {% for responsable in responsables %}
+        <option value="{{ responsable.id }}">{{ responsable.descripcion }}</option>
+    {% endfor %}
+</select>

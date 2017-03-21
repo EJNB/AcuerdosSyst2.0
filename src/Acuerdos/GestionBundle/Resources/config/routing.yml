@@ -1,0 +1,35 @@
+acuerdos_gestion_tema:
+    resource: "@AcuerdosGestionBundle/Resources/config/routing/tema.yml"
+    prefix:   /tema
+
+acuerdos_gestion_persona:
+    resource: "@AcuerdosGestionBundle/Resources/config/routing/persona.yml"
+    prefix:   /persona
+
+acuerdos_gestion_acuerdo:
+    resource: "@AcuerdosGestionBundle/Resources/config/routing/acuerdo.yml"
+    prefix:   /acuerdo
+
+acuerdos_gestion_acta:
+    resource: "@AcuerdosGestionBundle/Resources/config/routing/acta.yml"
+    prefix:   /acta
+
+acuerdos_gestion_comentario:
+    resource: "@AcuerdosGestionBundle/Resources/config/routing/comentario.yml"
+    prefix:   /comentario
+
+acuerdos_gestion_reunion:
+    resource: "@AcuerdosGestionBundle/Resources/config/routing/reunion.yml"
+    prefix:   /reunion
+
+acuerdos_gestion_area:
+    resource: "@AcuerdosGestionBundle/Resources/config/routing/area.yml"
+    prefix:   /area
+
+acuerdos_gestion_procedencia:
+    resource: "@AcuerdosGestionBundle/Resources/config/routing/procedencia.yml"
+    prefix:   /procedencia
+
+acuerdos_gestion_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: AcuerdosGestionBundle:Default:index }

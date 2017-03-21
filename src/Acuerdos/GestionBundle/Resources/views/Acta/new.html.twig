@@ -1,0 +1,25 @@
+{% extends '::layout-admin.html.twig' %}
+
+{% block content %}
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Crear Acta</h3>
+        </div>
+        <div class="panel-body">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Seleccione la Reunion</label>
+                    <select  id="select_reunion" class="selectpicker" data-live-search="true" data-size="10" onchange="rediretActaNew(this)" title="Seleccione la reunion">
+                        {% for reunion in reuniones %}
+                            <option
+                                value="{{ reunion.id }}"
+                                data-url="{{ path('select_reunion',{'reunion_id': reunion.id }) }}">{{ reunion.idReunion }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div><!--/.form-group-->
+            </div><!--/.col-md-3-->
+        </div>
+    </div>
+{% endblock %}

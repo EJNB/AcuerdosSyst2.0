@@ -1,0 +1,65 @@
+{% extends '::layout-admin.html.twig' %}
+
+{% block content %}
+    {% include "AcuerdosGestionBundle:Default:flash-message.html.twig" %}
+
+    <h2 class="page-header">Actas</h2>
+
+    <table class="table table-striped table-hover table-condensed">
+        <thead>
+        <tr>
+            <th>{{ knp_pagination_sortable(pagination, 'Descripcion', 'a.descripcion') }}</th>
+            <th>{{ knp_pagination_sortable(pagination, 'Fecha', 'a.fecha') }}</th>
+            <th>{{ knp_pagination_sortable(pagination, 'Hora Inicio', 'a.horaInicio') }}</th>
+            <th>{{ knp_pagination_sortable(pagination, 'Hora Fin', 'a.horaFin') }}</th>
+            <th>{{ knp_pagination_sortable(pagination, 'Aprobada', 'a.aprobada') }}</th>
+            <th>{{ knp_pagination_sortable(pagination, 'Revisada', 'a.revisada') }}</th>
+            <th>Reunion</th>
+            <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for entity in pagination %}
+            <tr>
+                <td>{{ entity.descripcion }}</td>
+                <td>{% if entity.fecha %}{{ entity.fecha|date('d-m-Y') }}{% endif %}</td>
+                <td>{{ entity.horaInicio | date('H:i')}}</td>
+                <td>{{ entity.horaFin | date('H:i') }}</td>
+                <td>{{ entity.aprobada }}</td>
+                <td>{{ entity.revisada }}</td>
+                <td>{{ entity.reunion }}</td>
+                <td>
+                    <a href="{{ path('acta_print_pdf', { 'id': entity.id }) }}" class="link-tooltip" data-placement="top" data-placement="top" title="imprimir">
+                        <span class="glyphicon glyphicon-print"></span>
+                    </a>
+                    <a href="{{ path('acta_show', { 'id': entity.id }) }}" class="link-tooltip" data-placement="top" title="Ver">
+                        <span class="glyphicon glyphicon-eye-open"></span>
+                    </a>
+                    <a href="{{ path('acta_edit', { 'id': entity.id }) }}" class="link-tooltip" data-placement="top" title="Editar">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                    </a>
+                    <a class="link-tooltip link-eliminar" href="javascript:void(0);"
+                       data-placement="top"
+                       title="Eliminar"
+                       data-url = "{{ path('acta_delete', { 'id': entity.id }) }}"
+                       data-descripcion="{{ entity.descripcion }}"
+                       data-toggle="modal" data-target="#modal-delete">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {#display navigation#}
+    <div class="navigation pull-right">
+        {{ knp_pagination_render(pagination) }}
+    </div>
+
+    <div class="list-actions">
+        {% include "AcuerdosGestionBundle:Default:link-add.html.twig" with { url:'acta_new' } %}
+    </div>
+
+    {{ include('AcuerdosGestionBundle:Default:modals.html.twig') }}
+
+{% endblock %}

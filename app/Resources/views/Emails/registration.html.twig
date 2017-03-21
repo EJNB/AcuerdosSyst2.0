@@ -1,0 +1,10 @@
+Estimados compañeros, por esta via se les informa que, quedan invitados a la reunion {{ reunion.procedencia }}
+a las {{ reunion.fechaRealizacion | date('H:i') }}, del {{ reunion.fechaRealizacion | date('d-m-Y') }}
+en {{ reunion.lugar }}.
+El orden del dia es el siguiente:<br>
+{% for tema in temas %}
+    {{ loop.index }} {{ tema.tema }}<br>
+{% endfor %}
+
+
+

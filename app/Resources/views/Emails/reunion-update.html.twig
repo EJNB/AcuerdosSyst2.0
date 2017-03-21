@@ -1,0 +1,7 @@
+Estimados compañeros, por esta via se les informa que, la reunion {{ reunion.procedencia }} se ha modificado, las misma es para
+las {{ reunion.fechaRealizacion | date('H:i') }}, del {{ reunion.fechaRealizacion | date('d-m-Y') }}
+en {{ reunion.lugar }}.
+El orden del dia es el siguiente:
+{% for tema in temas %}
+    {{ loop.index }} {{ tema.descripcion }}<br>
+{% endfor %}

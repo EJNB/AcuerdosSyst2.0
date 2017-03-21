@@ -1,0 +1,114 @@
+{% extends '::layout-admin.html.twig' %}
+
+{% block content %}
+<div class="container-fluid">
+    {{ form_start(form_acta) }}
+    <input type="hidden" value="{{ "now"|date("H:i") }}" name="horainicio">
+    <ul class="nav nav-pills center-block" style="margin-left: 350px">
+        <li role="presentation" class="active link-asistencia"><a id="link-asistencia" href="#">Asistencia</a></li>
+        <li role="presentation" class="link-desarrollo-reunion"><a id="link-desarrollo-reunion" href="#">Desarrollo de la reunion</a></li>
+        <li role="presentation" class="link-acuerdos-tomados"><a id="link-acuerdos-tomados" href="#">Acuerdos Tomados</a></li>
+        <li role="presentation" class="link-"><a id="link-revision-aprobacion" href="#">Aprobaci&oacute;n y Revisi&oacute;n</a></li>
+    </ul>
+    {# estos div estaran ocultos hasta q se de click solbre ellos #}
+    <div class="contenedor">
+        <div id="asistencia">
+
+            {#Participantes#}
+            <div class="col-md-12">
+                <input id="acta-reunion-id" type="hidden" name="reunion_id" value="{{ reunion.id }}" />
+                <br>
+                <h3 class="page-header">Participantes e Invitados</h3>
+                <div class="table-asistencia">
+                    {{ include('AcuerdosGestionBundle:Acta:asistencia.html.twig') }}
+                </div>
+
+            </div><!--col-md-12-- Aqui termina la seccion de los participantes-->
+        </div><!--/.div #asistencia-->
+        {# 2da Seccion Temas #}
+        <div id="desarrollo_reunion" class="hide" style="position: absolute; top: 20%; width: 92%;">
+            {# 2da Seccion Temas#}
+            <div class="row">
+                <h2 class="page-header">Temas y Comentarios</h2>
+                <div class="col-md-4">
+                    <label for="temas_select">Temas</label>
+                    <select id="temas_select" class="form-control" size="29">
+                        {% for tema in reunion.temas %}
+                            <option value="{{ tema.id }}">{{ tema.descripcion }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                {#Comentarios#}
+                <div class="col-md-4">
+                    <fieldset id="comentario" disabled>
+                        <label>Seleccione la persona</label>
+                        <select id="select_persona" class="form-control selectpicker" data-live-search="true" title="Seleccione la persona">
+                            {% for reunion in reuniones %}
+                                <option value="{{ reunion.idPersona.id }}">{{ reunion.idPersona.descripcion }}</option>
+                            {% endfor %}
+                        </select>
+                        <br>
+                        {#<br>#}
+                        <label for="exampleInputEmail1">Comentarios</label>
+                        <textarea id="text_comentario" class="form-control" placeholder="inserte el comentario" rows="15"></textarea>
+                        <button type="button" id="send_comentarios" class="btn btn-default" onclick="createComentario(this)">Agregar</button>
+                        <a id="tomar_acuerdos" href="javascript:void(0);" class="btn btn-default" >Tomar Acuerdo</a>
+                    </fieldset>
+                </div>
+
+                {#Historial de comentarios#}
+                <div class="col-md-4">
+                    <label for="exampleInputEmail1">Historial de comentarios</label>
+                    <div id="historial_comentarios" class="form-control"  style="height: 500px; overflow-x: hidden; padding: 20px 10px;">
+                        <!--Aqui va el contenido enviado por ajax -->
+                        {{ include('AcuerdosGestionBundle:Acta:list-coment.html.twig') }}
+                    </div>
+                </div>
+            </div>
+            <br>
+        </div><!--/div#desarrollo_reunion-->
+        {#3ra secion para los acuerdos tomados#}
+        <div id="acuerdos_tomados" class="hide">
+            <h2 class="page-header">Acuerdos tomados</h2>
+            <div class="table-acuerdos-tomados">
+                {{ include('AcuerdosGestionBundle:Acuerdo:table-index.html.twig') }}
+            </div>
+        </div>
+        <div id="revision_aprobacion" class="hide">
+
+            <h2 class="page-header">Revision y Aprobacion</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Aprobada</label>
+                        <select name="aprobada" class="selectpicker" data-size="10" data-live-search="true" title="Seleccione la persona">
+                            {% for reunion in reuniones %}
+                                <option data-subtext="{{ reunion.idPersona.cargo }}" value="{{ reunion.idPersona }}">{{ reunion.idPersona }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Revisada</label>
+                        <select name="revisada" class="selectpicker" data-size="10" data-live-search="true" title="Seleccione la persona">
+                            {% for reunion in reuniones %}
+                                <option data-subtext="{{ reunion.idPersona.cargo }}" value="{{ reunion.idPersona }}">{{ reunion.idPersona }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="">
+                <button type="submit" class="btn btn-primary">Terminar</button>
+                <a class="btn btn-default" href="{{ path('acta') }}">Regresar al listado</a>
+            </div>
+        </div>
+    </div><!--/.contenedor-->
+
+    {{ form_end(form_acta) }}
+</div><!--/end container-fluid-->
+    {{ include('AcuerdosGestionBundle:Default:modals.html.twig') }}
+    {{ include('AcuerdosGestionBundle:Default:modals_new_acuerdo.html.twig') }}
+
+{% endblock %}

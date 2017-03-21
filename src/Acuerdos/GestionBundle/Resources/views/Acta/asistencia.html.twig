@@ -1,0 +1,81 @@
+<table class="table">
+    <thead>
+    <tr>
+        <th style="width: 20%">Personas</th>
+        <th style="width: 5%">Asistencia</th>
+        <th style="width: 40%;padding: 10px 50px">Causa</th>
+        <th style="width: 20%">Sustituto</th>
+        <th style="width: 5%">Acciones</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for reunion in reuniones if reunion.tipo=="Participante" %}
+        <tr id="{{ reunion.idPersona.id }}">
+            <td {% if reunion.asistencia==1 %}style="color: red"{% endif %}>{{ reunion.idPersona.descripcion }}</td>
+            <td {% if reunion.asistencia==1 %}style="color: red"{% endif %}>
+                {% if reunion.asistencia==1 %}<span class="glyphicon glyphicon-remove"></span>{% else %}<span class="glyphicon glyphicon-ok"></span>{% endif %}
+            </td>
+            <td style="padding: 8px 50px">{{ reunion.causa }}</td>
+            <td>{{ reunion.sustituto }}</td>
+            <td>
+                <a href="#" class="link-tooltip" data-placement="top" title="Ver">
+                    <span class="glyphicon glyphicon-eye-open"></span>
+                </a>
+                <a href="#"
+                   class="link-tooltip"
+                   data-placement="top"
+                   title="Editar"
+                   data-url-asistant="{{ path('acta_update_asistencia') }}"
+                   data_id_asistant="{{ reunion.idPersona.id }}"
+                   onclick="trasnlateData(this)"
+                   data-toggle="modal"
+                   data-target="#modal_causa_ausencia">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                </a>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<h3 class="page-header">Invitados</h3>
+<table class="table">
+    <thead>
+    <tr>
+        <th style="width: 20%">Personas</th>
+        <th style="width: 5%">Asistencia</th>
+        <th style="width: 40%;padding: 10px 12%">Causa</th>
+        <th style="width: 20%">Sustituto</th>
+        <th style="width: 5%">Acciones</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for reunion in reuniones if reunion.tipo=="Invitado" %}
+        <tr id="{{ reunion.idPersona.id }}">
+            <td {% if reunion.asistencia==1 %}style="color: red"{% endif %}>{{ reunion.idPersona.descripcion }}</td>
+            <td {% if reunion.asistencia==1 %}style="color: red"{% endif %}>
+                {% if reunion.asistencia==1 %}<span class="glyphicon glyphicon-remove"></span>{% else %}<span class="glyphicon glyphicon-ok"></span>{% endif %}
+            </td>
+            <td style="padding: 8px 50px">{{ reunion.causa }}</td>
+            <td>{{ reunion.sustituto }}</td>
+            <td>
+                <a href="#" class="link-tooltip" data-placement="top" title="Ver">
+                    <span class="glyphicon glyphicon-eye-open"></span>
+                </a>
+                <a href="#"
+                   class="link-tooltip"
+                   data-placement="top"
+                   title="Editar"
+                   data-url-asistant="{{ path('acta_update_asistencia') }}"
+                   data_id_asistant="{{ reunion.idPersona.id }}"
+                   onclick="trasnlateData(this)"
+                   data-toggle="modal"
+                   data-target="#modal_causa_ausencia"
+                >
+                    <span class="glyphicon glyphicon-pencil"></span>
+                </a>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

@@ -1,0 +1,113 @@
+{% form_theme form 'form/fields.html.twig' %}
+{% extends '::layout-admin.html.twig' %}
+
+{% block content %}
+
+    <h2 class="page-header">Nueva Convocatoria</h2>
+
+    {{ form_start(form) }}
+
+    <div class="row">
+
+        <div class="col-md-3">{#Primera Regija de 3 columnas#}
+
+            {{ form_row(form.procedencia) }}
+
+            {{ form_row(form.tipo) }}
+            {{ form_row(form.fechaRealizacion) }}
+
+            {#{{ form_row(form.idReunion) }}#}
+            {{ form_row(form.lugar,{ 'atrr':{'class' : 'form-control' }} ) }}
+
+            <!--Coordinador, Participantes e Invitados-->
+            <div class="select-cordinador-part-invitados">
+                {{ include('AcuerdosGestionBundle:Reunion:select-participantes.html.twig') }}
+            </div>
+
+            {#{{ form_row(form.nivel) }}#}
+        </div><!--/.col-md-3-->
+
+        <div class="col-md-3">{#Segunda Regilla de 3 columnas#}
+            <!--add Temas-->
+            <label><strong>Agregue sus temas</strong></label>
+
+            <div class="form-group">
+                <input id="add_temas_descripcion" type="text" placeholder="titulo del tema" name="tema_descripcion">
+            </div>
+            <!--Clasificacion-->
+            <div class="form-group">
+                <select id="add_temas_clasificacion" class="form-control selectpicker" name="tema_clasificacion" title="Seleccione la clasificacion">
+                    <option value="Informativo">Informativo</option>
+                    <option value="Análisis y aprobación">Análisis y aprobación</option>
+                    <option value="Seguimiento y control">Seguimiento y control</option>
+                </select>
+            </div>
+            <!--Responsable del tema-->
+            {#<select#}
+                    {#id="add_temas_resp"#}
+                    {#class="selectpicker form-control"#}
+                    {#data-live-search="true"#}
+                    {#multiple data-actions-box="true"#}
+                    {#name="tema_responsable[]" title="Seleccione el responsable"#}
+                    {#data-size="7"#}
+                    {#multiple#}
+            {#>#}
+                {#{% for area in areas %}#}
+                    {#<optgroup label="{{ area.area }}">#}
+                        {#{% for persona in area.personas %}#}
+                            {#<option value="{{ persona.id }}">{{ persona.descripcion }}</option>#}
+                        {#{% endfor %}#}
+                    {#</optgroup>#}
+                {#{% endfor %}#}
+
+            {#</select>#}
+            <div class="form-group">
+                {#<label>Descripcion del tema</label>#}
+                <textarea id="text_descripcion" rows="16" placeholder="Descripcion del tema "></textarea>
+
+                {# Agregar personas mediante ajax#}
+                <a href="#" class="btn btn-default" data-target="#modal-add-person" data-toggle="modal">
+                    <span class="glyphicon glyphicon-plus"></span>Agregar Persona
+                </a>
+            </div>
+        </div><!--/.col-md-3-->
+        {#rejilla No 3 para los botones de add and remove#}
+        <div id="send-temas" class="col-md-1">
+            <a class="btn glyphicon glyphicon-plus link-tooltip"
+               id="add-tema" href="javascript:void(0);"
+               data-url="{{ path('add_temas') }}"
+               {#data-toggle="tooltip"#}
+               data-placement="top"
+               title="Agregar Tema"
+            ></a>
+            <a class="btn glyphicon glyphicon-minus link-tooltip"
+               id="remove_tema" href="javascript:void(0);"
+               data-toggle="tooltip"
+               data-placement="bottom"
+               title="Quitar Tema"
+            ></a>
+        </div><!--/.col-md-1-->
+        <div class="col-md-5" style="padding: 0">{#3ra Rejilla a 6 columnas#}
+            <!--Historial de temas-->
+            <label for="select-temas-asignados">Temas Seleccionados</label>
+            {#<div class="temas-selected">#}
+                {#{{ render('AcuerdosGestionBundle:Tema:temas-seleccionados.html.twig') }}#}
+            {#</div>#}
+            <select name="select-temas-asignados[]" id="select-temas-asignados" size="30" multiple class="form-control" required="required">
+
+            </select>
+            <input type="hidden" value="{{ app.request.uri }}" name="url"/>
+
+            <div class="pull-right">
+                <input type="submit" class="btn btn-primary" value="Aceptar" id="btn-send" style="display: none"/>
+                <a id="btn-enviar" class="btn btn-primary" href="javascript:void(0);">Aceptar</a>
+                <a id="remove_temas" class="btn btn-default" {% if app.request.uri==url('new_convocatoria') %}href="{{ path('mis_convocatorias') }}{% else %}href="{{ path('reunion') }}{% endif %}">Regresar al listado</a>
+            </div>
+        </div>
+    </div><!--/.row-->
+
+    {{ form_end(form) }}
+
+{% include "AcuerdosGestionBundle:Default:modals.html.twig" %}
+
+{% endblock %}

@@ -1,0 +1,8 @@
+<form action="request" method="post">
+    <input name="text" type="text">
+    <input name="checkbox" type="checkbox">
+    <input name="radio" type="radio">
+    <input name="email" type="email">
+    <input type="submit" value="enviar">
+    {{ app.request.request.set('text','aaaaa') }}
+</form>

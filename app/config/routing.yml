@@ -1,0 +1,38 @@
+acuerdos_frontend:
+    resource: "@AcuerdosFrontendBundle/Resources/config/routing.yml"
+    prefix:   /Frontend
+
+acuerdos_seguridad:
+    resource: "@AcuerdosSeguridadBundle/Resources/config/routing.yml"
+    prefix:   /Seguridad
+
+acuerdos_homepage:
+    path:     /
+    defaults: { _controller: AcuerdosSeguridadBundle:Security:login }
+
+#acuerdos_select_procedencia:
+#    path:     /seleccionarProcedencia
+#    defaults: { _controller: AcuerdosReportesBundle:Report:seleccionProcedencias }
+
+acuerdos_reportes:
+    resource: "@AcuerdosReportesBundle/Resources/config/routing.yml"
+    prefix:   /
+
+acuerdos_gestion:
+    resource: "@AcuerdosGestionBundle/Resources/config/routing.yml"
+    prefix:   /Gestion
+
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation
+
+login:
+    path:     /login
+    defaults: { _controller: AcuerdosSeguridadBundle:Security:login }
+
+login_check:
+    path:     /loginCheck
+    defaults: { _controller: AcuerdosSeguridadBundle:Security:loginCheck }
+
+logout:
+    path: /logout

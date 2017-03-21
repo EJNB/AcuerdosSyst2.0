@@ -1,0 +1,69 @@
+<!--Secretario-->
+<div class="form-group">
+    <label>Secretario de Acta</label>
+    <select
+            id="selected_secretario"
+            class="selectpicker form-control"
+            data-live-search="true"
+            name="secretario"
+            title="Seleccione el secretario"
+            data-size="10"
+            required
+    >
+        {% for area in areas %}
+            <optgroup label="{{ area.area }}">
+                {% for persona in area.personas %}
+                    <option value="{{ persona.id }}" {% if persona.id==app.user.id %}disabled{% endif %}>{{ persona.descripcion }}</option>
+                {% endfor %}
+            </optgroup>
+        {% endfor %}
+    </select>
+</div>
+
+<!--Participantes, -->
+<div class="form-group">
+    <label>Participantes</label>
+    <select
+        class="form-control selectpicker select-part-disponibles"
+        name="select-participantes-disponibles[]"
+        id="select-part-disponibles"
+        data-size="8"
+        multiple
+        data-actions-box="true"
+        data-live-search="true"
+        title="Seleccione los participantes"
+        required
+    >
+        {% for area in areas %}
+            <optgroup label="{{ area.area }}">
+                {% for persona in area.personas %}
+                    <option value="{{ persona.id }}" {% if persona.id==app.user.id %}disabled{% endif %}>{{ persona.descripcion }}</option>
+                {% endfor %}
+            </optgroup>
+        {% endfor %}
+    </select>
+</div>
+
+<!--invitados-->
+<div class="form-group">
+    <label>Invitados</label>
+    <select
+        id="select-invitados-disponibles"
+        class="form-control selectpicker"
+        name="select-invitados-disponibles[]" id="{#select-invitados-disponibles#}"
+        data-size="10"
+        multiple
+        data-actions-box="true"
+        data-live-search="true"
+        title="Seleccione los invitados"
+    >
+        {% for area in areas %}
+            <optgroup label="{{ area.area }}">
+                {% for persona in area.personas %}
+                    <option value="{{ persona.id }}">{{ persona.descripcion }}</option>
+                {% endfor %}
+            </optgroup>
+        {% endfor %}
+    </select>
+</div>
+

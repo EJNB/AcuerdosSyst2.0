@@ -1,0 +1,542 @@
+<?php
+
+namespace Acuerdos\GestionBundle\Entity;
+
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\AdvancedUserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+
+/**
+ * Persona
+ *
+ * @ORM\Table()
+ * @ORM\Entity
+ */
+class Persona  implements  AdvancedUserInterface, \Serializable
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @ORM\Column(type="string", length=25, unique=true)
+     */
+    private $username;
+
+    /**
+     * @ORM\Column(type="string", length=64)
+     */
+    private $password;
+
+    /**
+     * @var string
+     * @Assert\NotBlank()
+     * @ORM\Column(name="nombre", type="string", length=200)
+     */
+    private $descripcion;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="cargo", type="string", length=150)
+     */
+    private $cargo;
+
+    /**
+     * @var string
+     * @Assert\Email(message = "The email '{{ value }}' is not a valid email.")
+     * @ORM\Column(name="email", type="string", length=100, unique=true)
+     */
+    private $email;
+
+    /**
+     * @ORM\Column(name="is_active", type="boolean")
+     */
+    private $isActive;
+
+    /**
+     * @var Area
+     * @ORM\ManyToOne(targetEntity="Area", inversedBy="personas")
+     * @ORM\JoinColumn(name="area_id", referencedColumnName="id", onDelete="CASCADE")
+     */
+    private $area;
+
+//    /**
+//     * Many Groups have Many Users.
+//     * @ORM\ManyToMany(targetEntity="Tema", mappedBy="personas")
+//     */
+//    private $temas;
+    /**
+     * @ORM\OneToMany(targetEntity="ReunionPersona", mappedBy="idPersona", cascade={"persist"})
+     */
+    private $rpPersona;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Comentario", mappedBy="persona")
+     */
+    private $comentarios;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Acuerdo", mappedBy="personas")
+     **/
+    private $acuerdos;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Acuerdos\SeguridadBundle\Entity\Role", inversedBy="users")
+     */
+    private $roles;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->rpPersona = new ArrayCollection();
+        $this->roles = new ArrayCollection();
+        $this->acuerdos = new ArrayCollection();
+        $this->comentarios = new ArrayCollection();
+        $this->temas = new ArrayCollection();
+        $this->isActive = true;
+        // may not be needed, see section on salt below
+        // $this->salt = md5(uniqid(null, true));
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set nombre
+     *
+     * @param string $nombre
+     * @return Persona
+     */
+    public function setNombre($nombre)
+    {
+        $this->nombre = $nombre;
+
+        return $this;
+    }
+
+    /**
+     * Get nombre
+     *
+     * @return string 
+     */
+    public function getNombre()
+    {
+        return $this->nombre;
+    }
+
+    /**
+     * Set cargo
+     *
+     * @param string $cargo
+     * @return Persona
+     */
+    public function setCargo($cargo)
+    {
+        $this->cargo = $cargo;
+
+        return $this;
+    }
+
+    /**
+     * Get cargo
+     *
+     * @return string 
+     */
+    public function getCargo()
+    {
+        return $this->cargo;
+    }
+
+    /**
+     * Set email
+     *
+     * @param string $email
+     * @return Persona
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * Get email
+     *
+     * @return string 
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * Set area
+     *
+     * @param \`\GestionBundle\Entity\Area $area
+     * @return Persona
+     */
+    public function setArea(\Acuerdos\GestionBundle\Entity\Area $area = null)
+    {
+        $this->area = $area;
+
+        return $this;
+    }
+
+    /**
+     * Get area
+     *
+     * @return \Acuerdos\GestionBundle\Entity\Area 
+     */
+    public function getArea()
+    {
+        return $this->area;
+    }
+
+    /**
+     * Add reuniones
+     *
+     * @param \Acuerdos\GestionBundle\Entity\Reunion $reuniones
+     * @return Persona
+     */
+    public function addReunione(\Acuerdos\GestionBundle\Entity\Reunion $reuniones)
+    {
+        $this->reuniones[] = $reuniones;
+
+        return $this;
+    }
+
+    /**
+     * Remove reuniones
+     *
+     * @param \Acuerdos\GestionBundle\Entity\Reunion $reuniones
+     */
+    public function removeReunione(\Acuerdos\GestionBundle\Entity\Reunion $reuniones)
+    {
+        $this->reuniones->removeElement($reuniones);
+    }
+
+    /**
+     * Get reuniones
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getReuniones()
+    {
+        return $this->reuniones;
+    }
+
+    /**
+     * Set descripcion
+     *
+     * @param string $descripcion
+     * @return Persona
+     */
+    public function setDescripcion($descripcion)
+    {
+        $this->descripcion = $descripcion;
+
+        return $this;
+    }
+
+    /**
+     * Get descripcion
+     *
+     * @return string 
+     */
+    public function getDescripcion()
+    {
+        return $this->descripcion;
+    }
+
+    public function __toString(){
+        return $this->getDescripcion();
+    }
+
+    /**
+     * Add comentarios
+     *
+     * @param \Acuerdos\GestionBundle\Entity\Comentario $comentarios
+     * @return Persona
+     */
+    public function addComentario(\Acuerdos\GestionBundle\Entity\Comentario $comentarios)
+    {
+        $this->comentarios[] = $comentarios;
+
+        return $this;
+    }
+
+    /**
+     * Remove comentarios
+     *
+     * @param \Acuerdos\GestionBundle\Entity\Comentario $comentarios
+     */
+    public function removeComentario(\Acuerdos\GestionBundle\Entity\Comentario $comentarios)
+    {
+        $this->comentarios->removeElement($comentarios);
+    }
+
+    /**
+     * Get comentarios
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getComentarios()
+    {
+        return $this->comentarios;
+    }
+
+    /**
+     * Add rpPersona
+     *
+     * @param \Acuerdos\GestionBundle\Entity\ReunionPersona $rpPersona
+     * @return Persona
+     */
+    public function addRpPersona(\Acuerdos\GestionBundle\Entity\ReunionPersona $rpPersona)
+    {
+        $this->rpPersona[] = $rpPersona;
+
+        return $this;
+    }
+
+    /**
+     * Remove rpPersona
+     *
+     * @param \Acuerdos\GestionBundle\Entity\ReunionPersona $rpPersona
+     */
+    public function removeRpPersona(\Acuerdos\GestionBundle\Entity\ReunionPersona $rpPersona)
+    {
+        $this->rpPersona->removeElement($rpPersona);
+    }
+
+    /**
+     * Get rpPersona
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getRpPersona()
+    {
+        return $this->rpPersona;
+    }
+
+    /**
+     * Add temas
+     *
+     * @param \Acuerdos\GestionBundle\Entity\Persona $temas
+     * @return Persona
+     */
+    public function addTema(\Acuerdos\GestionBundle\Entity\Persona $temas)
+    {
+        $this->temas[] = $temas;
+
+        return $this;
+    }
+
+    /**
+     * Remove temas
+     *
+     * @param \Acuerdos\GestionBundle\Entity\Persona $temas
+     */
+    public function removeTema(\Acuerdos\GestionBundle\Entity\Persona $temas)
+    {
+        $this->temas->removeElement($temas);
+    }
+
+    /**
+     * Get temas
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getTemas()
+    {
+        return $this->temas;
+    }
+
+    /**
+     * Add acuerdos
+     *
+     * @param \Acuerdos\GestionBundle\Entity\Acuerdo $acuerdos
+     * @return Persona
+     */
+    public function addAcuerdo(\Acuerdos\GestionBundle\Entity\Acuerdo $acuerdos)
+    {
+        $this->acuerdos[] = $acuerdos;
+
+        return $this;
+    }
+
+    /**
+     * Remove acuerdos
+     *
+     * @param \Acuerdos\GestionBundle\Entity\Acuerdo $acuerdos
+     */
+    public function removeAcuerdo(\Acuerdos\GestionBundle\Entity\Acuerdo $acuerdos)
+    {
+        $this->acuerdos->removeElement($acuerdos);
+    }
+
+    /**
+     * Get acuerdos
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getAcuerdos()
+    {
+        return $this->acuerdos;
+    }
+
+    public function getUsername()
+    {
+        return $this->username;
+    }
+
+    public function getSalt()
+    {
+        // you *may* need a real salt depending on your encoder
+        // see section on salt below
+        return null;
+    }
+
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    public function getRoles()
+    {
+        return $this->roles->toArray();
+    }
+    public function eraseCredentials()
+    {
+    }
+    /** @see \Serializable::serialize() */
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+            $this->username,
+            $this->password,
+            $this->isActive
+            // see section on salt below
+            // $this->salt,
+        ));
+    }
+    /** @see \Serializable::unserialize() */
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+            $this->username,
+            $this->password,
+            $this->isActive
+            // see section on salt below
+            // $this->salt
+        ) = unserialize($serialized);
+    }
+
+    /**
+     * Set username
+     *
+     * @param string $username
+     * @return Persona
+     */
+    public function setUsername($username)
+    {
+        $this->username = $username;
+
+        return $this;
+    }
+
+    /**
+     * Set password
+     *
+     * @param string $password
+     * @return Persona
+     */
+    public function setPassword($password)
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+    public function isAccountNonExpired()
+    {
+        return true;
+    }
+    public function isAccountNonLocked()
+    {
+        return true;
+    }
+    public function isCredentialsNonExpired()
+    {
+        return true;
+    }
+    public function isEnabled()
+    {
+        return $this->isActive;
+    }
+
+    /**
+     * Set isActive
+     *
+     * @param boolean $isActive
+     * @return Persona
+     */
+    public function setIsActive($isActive)
+    {
+        $this->isActive = $isActive;
+
+        return $this;
+    }
+
+    /**
+     * Get isActive
+     *
+     * @return boolean 
+     */
+    public function getIsActive()
+    {
+        return $this->isActive;
+    }
+
+    /**
+     * Add roles
+     *
+     * @param \Acuerdos\SeguridadBundle\Entity\Role $roles
+     * @return Persona
+     */
+    public function addRole(\Acuerdos\SeguridadBundle\Entity\Role $roles)
+    {
+        $this->roles[] = $roles;
+
+        return $this;
+    }
+
+    /**
+     * Remove roles
+     *
+     * @param \Acuerdos\SeguridadBundle\Entity\Role $roles
+     */
+    public function removeRole(\Acuerdos\SeguridadBundle\Entity\Role $roles)
+    {
+        $this->roles->removeElement($roles);
+    }
+}

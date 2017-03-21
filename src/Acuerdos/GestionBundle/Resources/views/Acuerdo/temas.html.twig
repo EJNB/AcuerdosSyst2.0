@@ -1,0 +1,15 @@
+<label for="select-temas">Temas</label>
+{% set disable ="disabled" %}
+<select
+    id="select-temas"
+    class="temas selectpicker"
+    data-live-search="true"
+    name="select-temas"
+    {% if app.request.uri == "http://127.0.0.1/AcuerdosSyst2.0/web/app_dev.php/Gestion/acuerdo/new" %}
+        {{ disable }}
+    {% endif %}
+>
+    {% for tema in temas %}
+        <option value="{{ tema.id }}">{{ tema.descripcion }}</option>
+    {% endfor %}
+</select>

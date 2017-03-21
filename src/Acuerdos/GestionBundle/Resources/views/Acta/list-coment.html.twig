@@ -1,0 +1,26 @@
+{% for tema in reunion.temas %}
+    {% for comentario in tema.comentarios %}
+        <div id="delete" class="row">
+            <div class="col-md-12">
+                <div class="msg">
+                    <a href="#">{{ comentario.persona }}</a>
+                    <div class="pull-right" data_id="{{ comentario.id }}" data_url_edit="{{ path('comentario_edit') }}" data_url_delete="{{ path('comentario_delete') }}">
+                        <a href="#" class="link-tooltip link-editar" data-placement="top" title="Editar" onclick="editComent(this)">
+                            <span class="glyphicon glyphicon-pencil"></span>
+                        </a>
+                        <a
+                                href="#"
+                                class="link-tooltip link-eliminar-coment"
+                                data-placement="top"
+                                title="Eliminar"
+                                onclick="translateData(this)"
+                        >
+                            <span class="glyphicon glyphicon-trash"></span>
+                        </a>
+                    </div><!--/.pull-righ-->
+                    <p class="clave" onkeypress="saveComentario(this,event)">{{ comentario.comentario }}</p>
+                </div><!--/.msg-->
+            </div><!--/.col-md-12-->
+        </div><!--/.row-->
+    {% endfor %}
+{% endfor %}

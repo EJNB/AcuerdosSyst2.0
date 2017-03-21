@@ -1,0 +1,13 @@
+<select
+    id="popup-persona-area"
+    class="form-control selectpicker"
+    data-live-search="true"
+    data-size="8"
+    required="required"
+    name="area"
+    title="Seleccione el departamento"
+>
+    {% for area in areas %}
+        <option value="{{ area.id }}">{{ area.area }}</option>
+    {% endfor %}
+</select>

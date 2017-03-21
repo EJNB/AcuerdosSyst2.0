@@ -1,0 +1,21 @@
+{% extends '::layout-admin.html.twig' %}
+
+{% block content %}
+
+    {% include "AcuerdosGestionBundle:Default:flash-message.html.twig" %}
+
+    <h3 class="page-header">Personas</h3>
+
+    <div class="pull-right"style="width: 25%; padding: 5px">
+        {{ include ("AcuerdosGestionBundle:Default:admin-search-form.html.twig", { 'url' : app.request.uri }) }}
+    </div>
+
+    {{ include('AcuerdosGestionBundle:Persona:table-index.html.twig') }}
+
+    <div class="list-actions">
+        {% include "AcuerdosGestionBundle:Default:link-add.html.twig" with { url:'persona_new' } %}
+    </div>
+
+    {% include "AcuerdosGestionBundle:Default:modals.html.twig" %}
+
+{% endblock %}

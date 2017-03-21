@@ -1,0 +1,27 @@
+{% extends "::layout-admin.html.twig" %}
+
+{% block content %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">REUNIONES:</h3>
+        </div>
+
+        <div class="panel-body">
+            <div id="lista-proced">
+                <ul class="list-group">
+                    {% for reunion in reuniones %}
+                        <a style="text-decoration: none" href="{{ path('acuerdos_reunion', { 'reunion': reunion.id }) }}" >
+                            <li class="list-group-item">
+                                <span class="badge">{{ reunion.acuerdos | length }}</span>
+                                <span class="glyphicon glyphicon-bookmark"></span>{{ reunion }}
+                            </li>
+                        </a>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div><!--/.panel-body-->
+        <div class="panel-footer">
+            <a href="{{ path('select_procedencias') }}" class="btn btn-default">Regresar al listado</a>
+        </div>
+    </div><!--/.panel panel-default-->
+{% endblock %}

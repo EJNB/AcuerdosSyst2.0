@@ -1,0 +1,27 @@
+acuerdos_reportes_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: AcuerdosReportesBundle:Default:index }
+
+select_procedencias:
+    path:     /seleccionProcedencias
+    defaults: { _controller: AcuerdosReportesBundle:Report:seleccionProcedencias }
+
+reunion_procedencia:
+    path:     /reunionProcedencia/{procedencia}
+    defaults: { _controller: AcuerdosReportesBundle:Report:reunionProcedencia }
+
+acuerdos_reunion:
+    path:     /acuerdosReunion/{reunion}
+    defaults: { _controller: AcuerdosReportesBundle:Report:acuerdosReunion }
+
+acuerdos_message:
+    path:     /acuerdosMessage
+    defaults: { _controller: AcuerdosReportesBundle:Report:acuerdosMessage }
+
+acuerdos_pdf:
+    path:     /acuerdosPdf
+    defaults: { _controller: AcuerdosReportesBundle:Report:acuerdosPdf }
+
+acuerdos_persona:
+    path:     /Acuerdos/Persona
+    defaults: { _controller: AcuerdosReportesBundle:Report:acuerdosPersona }

@@ -1,0 +1,16 @@
+<select
+        class="form-control selectpicker select-invitados-disponibles"
+        name="select-invitados-disponibles[]" id="{#select-invitados-disponibles#}"
+        data-size="7" multiple
+        data-actions-box="true"
+        data-live-search="true"
+        title="Seleccione los invitados"
+>
+    {% for area in areas %}
+        <optgroup label="{{ area.area }}">
+            {% for persona in area.personas %}
+                <option value="{{ persona.id }}">{{ persona.descripcion }}</option>
+            {% endfor %}
+        </optgroup>
+    {% endfor %}
+</select>

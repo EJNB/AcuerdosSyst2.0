@@ -1,0 +1,69 @@
+{% extends "::layout-admin.html.twig" %}
+
+{% block content %}
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading"><span class="glyphicon glyphicon-book"></span>REPORTE POR PROCEDENCIA</div>
+            <div class="panel-body">
+                <div id="lista-proced">
+                    <ul class="list-group">
+                        {% for procedencia in procedencias %}
+                            <a style="text-decoration: none" href="{{ path('reunion_procedencia', { 'procedencia': procedencia.id }) }}">
+                                <li class="list-group-item">
+                                    <span class="badge">{{ procedencia | length }}</span>
+                                    <span class="glyphicon glyphicon-bookmark"></span>{{ procedencia.procedencia }}
+                                </li>
+                            </a>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading"><span class="glyphicon glyphicon-book"></span>REPORTE POR PERSONA</div>
+            <div class="panel-body">
+                <form method="post" action="{{ path('acuerdos_persona') }}" id="form-ac-pers">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <select class="selectpicker form-control"
+                                    title="Seleccione la persona"
+                                    data-live-search="true"
+                                    {#id="select-pers" name="select-pers"#}
+                            >
+                                {% for area in areas %}
+                                    <optgroup label="{{ area }}">
+                                        {% for persona in area.personas %}
+                                            <option value="{{ persona.id }}">{{ persona }}</option>
+                                        {% endfor %}
+                                    </optgroup>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <select
+                                class="selectpicker"
+                                title="ROL"
+                                name="select-rol"
+                            >
+                                <option style="display: none" value="all" selected="selected">Rol</option>
+                                <option value="all">Todos</option>
+                                <option value="Autor">Autor</option>
+                                <option value="Responsable">Responsable</option>
+                                <option value="Ejecutor">Ejecutor</option>
+                            </select>
+                        </div>
+                        {#<input type="submit" value="Buscar">#}
+                    </div>
+                    <div class="col-md-1" style="padding: 0px ">
+                        <a href="javascript:void(0);" id="link-ac-pers" class="btn btn-primary btn-sm">
+                            <span class="glyphicon glyphicon-search"></span>
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

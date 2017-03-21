@@ -1,0 +1,19 @@
+{% form_theme edit_form 'form/fields.html.twig' %}
+{% extends '::layout-admin.html.twig' %}
+
+{% block content %}
+    <div class="row">
+
+        <h2 class="page-header">Editar Tema: {{ entity.descripcion }}</h2>
+
+        <div class="col-md-3">
+            {{ form_start(edit_form) }}
+            {{ form_widget(edit_form) }}
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Aceptar</button>
+                <a class="btn btn-default" href="{{ path('tema') }}">Regresar al listado</a>
+            </div>
+            {{ form_end(edit_form) }}
+        </div>
+    </div>
+{% endblock %}

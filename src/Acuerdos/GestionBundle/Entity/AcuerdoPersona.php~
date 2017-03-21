@@ -1,0 +1,83 @@
+<?php
+
+namespace Acuerdos\GestionBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * AcuerdoPersona
+ *
+ * @ORM\Table()
+ * @ORM\Entity
+ */
+class AcuerdoPersona
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="tipo", type="string", length=20)
+     */
+    private $tipo;
+
+    /**
+     * @var \Acuerdo
+     *
+     * @ORM\ManyToOne(targetEntity="Acuerdo", inversedBy="apAcuerdo")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_acuerdo", referencedColumnName="id")
+     * })
+     */
+    private $idAcuerdo;
+
+    /**
+     * @var \Persona
+     *
+     * @ORM\ManyToOne(targetEntity="Persona", inversedBy="apPersona")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_persona", referencedColumnName="id")
+     * })
+     */
+    private $idPersona;
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set tipo
+     *
+     * @param string $tipo
+     * @return AcuerdoPersona
+     */
+    public function setTipo($tipo)
+    {
+        $this->tipo = $tipo;
+
+        return $this;
+    }
+
+    /**
+     * Get tipo
+     *
+     * @return string 
+     */
+    public function getTipo()
+    {
+        return $this->tipo;
+    }
+}

@@ -1,0 +1,12 @@
+# This file is auto-generated during the composer install
+parameters:
+    database_host: 127.0.0.1
+    database_port: null
+    database_name: acuerdosdb2.0
+    database_user: root
+    database_password: null
+    mailer_transport: smtp
+    mailer_host: 10.104.190.5
+    mailer_user: acuerdos@cubanacan.tur.cu
+    mailer_password: Cubanacan123
+    secret: ThisTokenIsNotSoSecretChangeIt

@@ -1,0 +1,11 @@
+acuerdos_seguridad_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: AcuerdosSeguridadBundle:Default:index }
+
+acuerdos_seguridad_security:
+    path:     /admin
+    defaults: { _controller: AcuerdosSeguridadBundle:Default:admin }
+
+users_changepass_user:
+    path: /change_my_password
+    defaults: { _controller: "AcuerdosSeguridadBundle:Security:changePassword" }

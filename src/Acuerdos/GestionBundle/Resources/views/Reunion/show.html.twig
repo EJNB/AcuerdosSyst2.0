@@ -1,0 +1,77 @@
+{% extends '::layout-admin.html.twig' %}
+
+{% block content %}
+
+        <h3 class="page-header">Reunion {{ entity.idReunion }}</h3>
+
+        <table class="table table-hover">
+            <tbody>
+            <tr>
+                <th>IdReunion</th>
+                <td>{{ entity.idReunion }}</td>
+            </tr>
+            <tr>
+                <th>Fecha de Creacion</th>
+                <td>{{ entity.fechaCreacion|date('d-m-Y h:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Fecha de Realizacion</th>
+                <td>{{ entity.fechaRealizacion|date('d-m-Y h:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Lugar</th>
+                <td>{{ entity.lugar }}</td>
+            </tr>
+            <tr>
+                <th>Tipo</th>
+                <td>{% if entity.tipo == 1 %}{{ 'Ordinaria' }} {% else %} {{ 'Extraordinaria' }}{% endif %}</td>
+            </tr>
+            {#<tr>#}
+                {#<th>Nivel</th>#}
+                {#<td>{{ entity.nivel }}</td>#}
+            {#</tr>#}
+            <tr>
+                <th>Participantes:</th>
+                <td>
+                    {% for participante in participantes %}
+                        <label>{{ participante.idPersona.descripcion }}</label><br>
+                    {% endfor %}
+                </td>
+                {#<td>{{ entity.temas }}</td>#}
+            </tr>
+            <tr>
+                <th>Invitados:</th>
+                <td>
+                    {% for participante in participantes if participante.tipo=="Invitado" %}
+                        <label>{{ participante.idPersona.descripcion }}</label><br>
+                    {% endfor %}
+                </td>
+                {#<td>{{ entity.temas }}</td>#}
+            </tr>
+            <tr>
+                <th>Temas:</th>
+                <td>
+                    {% for tema in temas %}
+                        <label>{{ tema.tema }}</label><br>
+                    {% endfor %}
+                </td>
+            </tr>
+            </tbody>
+            <tfooter>
+                <a class="btn btn-primary" {% if app.request.uri==url('mi_convacotoria_show',{'id':entity.id}) %}href="{{ path('mi_convacotoria_edit',{ 'id': entity.id }) }}"{% else %} href="{{ path('reunion_edit',{ 'id': entity.id }) }}"{% endif %}>Editar</a>
+                <a class="btn btn-danger link-eliminar"
+                   href="javascript:void(0);"
+                   data-url="{{ path('reunion_delete',{ 'id': entity.id }) }}"
+                   data-descripcion="{{ entity.idReunion }}"
+                   data-toggle="modal" data-target="#modal-delete"
+                >
+                    Eliminar
+                </a>
+                <a class="btn btn-default" {% if app.request.uri==url('mi_convacotoria_show',{'id':entity.id}) %}href="{{ path('mis_convocatorias') }}" {% else %} href="{{ path('reunion') }}" {% endif %}>Regresar al listado</a>
+            </tfooter>
+        </table>
+    </div>
+
+    {{ include('AcuerdosGestionBundle:Default:modals.html.twig') }}
+
+{% endblock %}
