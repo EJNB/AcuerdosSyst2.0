@@ -210,6 +210,7 @@ $(document).ready( function() {
                             $('input[name=cargo]').val('');
                             $('input[name=email]').val('');
                             $('select[name=area]').selectpicker('val','');
+                            $('select[name=username]').val('val','');
                         }
                     });//end ajax
                 }else {
@@ -224,6 +225,13 @@ $(document).ready( function() {
         }
 
     });
+
+    //si cancelo la  operacion de agregar persona
+    $('button#cancel-add-person').click(function(){
+        $('#form_add_person input').val('');
+        $('#form_add_person select#popup-persona-area').selectpicker('val','');
+    });
+
     //formato del datepicker del new de Reunion
     $('.format_date_time').datetimepicker({
             locale: 'es',
