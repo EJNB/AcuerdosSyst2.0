@@ -60,7 +60,7 @@
         {% for area in areas %}
             <optgroup label="{{ area.area }}">
                 {% for persona in area.personas %}
-                    <option value="{{ persona.id }}">{{ persona.descripcion }}</option>
+                    <option value="{{ persona.id }}" {% if persona.id==app.user.id %}disabled{% endif %} >{{ persona.descripcion }}</option>
                 {% endfor %}
             </optgroup>
         {% endfor %}
